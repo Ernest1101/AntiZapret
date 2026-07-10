@@ -21,40 +21,43 @@ class ServiceManager:
             script = os.path.join(self.bin_path, "service_create.cmd")
             if os.path.exists(script):
                 subprocess.run([script, strategy], shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
-                return True
-            return False
-        except:
-            return False
+                return True, "Служба создана"
+            return False, "Скрипт service_create.cmd не найден"
+        except Exception as e:
+            return False, f"Ошибка: {str(e)}"
 
     def delete_service(self):
         try:
             script = os.path.join(self.bin_path, "service_del.cmd")
             if os.path.exists(script):
                 subprocess.run([script], shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
-                return True
-            return False
-        except:
-            return False
+                return True, "Служба удалена"
+            return False, "Скрипт service_del.cmd не найден"
+        except Exception as e:
+            return False, f"Ошибка: {str(e)}"
+
+    def remove_service(self):
+        return self.delete_service()
 
     def start_service(self):
         try:
             script = os.path.join(self.bin_path, "service_start.cmd")
             if os.path.exists(script):
                 subprocess.run([script], shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
-                return True
-            return False
-        except:
-            return False
+                return True, "Служба запущена"
+            return False, "Скрипт service_start.cmd не найден"
+        except Exception as e:
+            return False, f"Ошибка: {str(e)}"
 
     def stop_service(self):
         try:
             script = os.path.join(self.bin_path, "service_stop.cmd")
             if os.path.exists(script):
                 subprocess.run([script], shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
-                return True
-            return False
-        except:
-            return False
+                return True, "Служба остановлена"
+            return False, "Скрипт service_stop.cmd не найден"
+        except Exception as e:
+            return False, f"Ошибка: {str(e)}"
 
     def get_service_status(self):
         try:
