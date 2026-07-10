@@ -9,7 +9,7 @@ class StrategyManager:
         self.strategies = {
             "general": {
                 "name": "General",
-                "description": "Базовая стратегия обхода DPI (multisplit)",
+                "description": "Базовая стратегия обхода DPI",
                 "args": self._get_general_args()
             },
             "general_alt": {
@@ -44,18 +44,18 @@ class StrategyManager:
             "--new",
             "--filter-tcp=2053,2083,2087,2096,8443",
             "--hostlist-domains=discord.media",
-            "--dpi-desync=multisplit",
-            "--dpi-desync-split-seqovl=681",
-            "--dpi-desync-split-pos=1",
-            f"--dpi-desync-split-seqovl-pattern={self.bin_path}\\tls_clienthello_www_google_com.bin",
+            "--dpi-desync=fake,fakedsplit",
+            "--dpi-desync-repeats=6",
+            "--dpi-desync-fooling=ts",
+            f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin",
             "--new",
             "--filter-tcp=80,443",
             f"--hostlist={self.lists_path}\\list-general.txt",
             f"--hostlist={self.lists_path}\\list-general-user.txt",
-            "--dpi-desync=multisplit",
-            "--dpi-desync-split-seqovl=568",
-            "--dpi-desync-split-pos=1",
-            f"--dpi-desync-split-seqovl-pattern={self.bin_path}\\tls_clienthello_4pda_to.bin"
+            "--dpi-desync=fake,fakedsplit",
+            "--dpi-desync-repeats=6",
+            "--dpi-desync-fooling=ts",
+            f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin"
         ]
 
     def _get_general_alt_args(self):
@@ -81,7 +81,6 @@ class StrategyManager:
             "--dpi-desync=fake,fakedsplit",
             "--dpi-desync-repeats=6",
             "--dpi-desync-fooling=ts",
-            "--dpi-desync-fakedsplit-pattern=0x00",
             f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin",
             "--new",
             "--filter-tcp=80,443",
@@ -90,10 +89,7 @@ class StrategyManager:
             "--dpi-desync=fake,fakedsplit",
             "--dpi-desync-repeats=6",
             "--dpi-desync-fooling=ts",
-            "--dpi-desync-fakedsplit-pattern=0x00",
-            f"--dpi-desync-fake-tls={self.bin_path}\\stun.bin",
-            f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin",
-            f"--dpi-desync-fake-http={self.bin_path}\\tls_clienthello_max_ru.bin"
+            f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin"
         ]
 
     def _get_general_fake_args(self):
@@ -116,17 +112,18 @@ class StrategyManager:
             "--new",
             "--filter-tcp=2053,2083,2087,2096,8443",
             "--hostlist-domains=discord.media",
-            "--dpi-desync=fake,fakedsplit",
+            "--dpi-desync=fake,split2",
             "--dpi-desync-repeats=6",
-            "--dpi-desync-fooling=md5sig",
+            "--dpi-desync-fooling=md5sig,badseq",
             f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin",
             "--new",
             "--filter-tcp=80,443",
             f"--hostlist={self.lists_path}\\list-general.txt",
             f"--hostlist={self.lists_path}\\list-general-user.txt",
             "--dpi-desync=fake,split2",
-            "--dpi-desync-autottl=2",
-            "--dpi-desync-fooling=md5sig"
+            "--dpi-desync-repeats=6",
+            "--dpi-desync-fooling=md5sig,badseq",
+            f"--dpi-desync-fake-tls={self.bin_path}\\tls_clienthello_www_google_com.bin"
         ]
 
     def get_available_strategies(self):
