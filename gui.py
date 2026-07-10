@@ -389,16 +389,6 @@ class AntiZapretApp(ctk.CTk):
             btn.pack(fill=tk.X, padx=10, pady=2)
             self.nav_buttons[key] = btn
 
-        spacer = ctk.CTkFrame(sidebar, fg_color="transparent")
-        spacer.pack(fill=tk.BOTH, expand=True)
-
-        ctk.CTkButton(
-            sidebar, text="✕  Выход", anchor="w", height=40,
-            fg_color="transparent", text_color="#ef5350",
-            hover_color=("gray70", "gray30"),
-            command=self._quit
-        ).pack(fill=tk.X, padx=10, pady=(0, 15))
-
     def _build_header(self):
         header = ctk.CTkFrame(self, height=50, corner_radius=0)
         header.grid(row=0, column=1, sticky="ew")
@@ -460,10 +450,6 @@ class AntiZapretApp(ctk.CTk):
         self.log_panel.log("Остановка всех процессов...", "INFO")
         ok, msg = self.strategy_manager.stop_all()
         self.log_panel.log(msg, "OK" if ok else "ERROR")
-
-    def _quit(self):
-        self.log_panel.log("Завершение работы...", "INFO")
-        self.after(300, self.destroy)
 
 
 if __name__ == "__main__":
