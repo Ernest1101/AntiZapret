@@ -31,7 +31,6 @@ class AntiZapretGUI(ctk.CTk):
         
         self._setup_window()
         self._create_ui()
-        self._setup_hotkeys()
         self._start_status_monitor()
         
         self.log("AntiZapret запущен", "OK")
@@ -686,11 +685,6 @@ class AntiZapretGUI(ctk.CTk):
     def _update_stats_display(self):
         for key, label in self.stats_labels.items():
             label.configure(text=f"{label.cget('text').split(':')[0]}: {self.stats.get(key, 0)}")
-    
-    def _setup_hotkeys(self):
-        self.bind("<F5>", lambda e: self._start_current())
-        self.bind("<F6>", lambda e: self._stop_current())
-        self.bind("<F7>", lambda e: self._test_all_strategies())
     
     def _is_admin(self):
         try:
