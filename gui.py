@@ -706,16 +706,22 @@ class AntiZapretGUI(ctk.CTk):
             self.destroy()
 
 def main():
-    if sys.platform == "win32":
-        import ctypes
-        if not ctypes.windll.shell32.IsUserAnAdmin():
-            script = os.path.abspath(sys.argv[0])
-            params = ' '.join([script] + sys.argv[1:])
-            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, params, None, 1)
-            sys.exit(0)
-    
-    app = AntiZapretGUI()
-    app.mainloop()
+    try:
+        if sys.platform == "win32":
+            import ctypes
+            if not ctypes.windll.shell32.IsUserAnAdmin():
+                script = os.path.abspath(sys.argv[0])
+                params = ' '.join([f'"{script}"'] + [f'"{arg}"' for arg in sys.argv[1:]])
+                ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, params, None, 1)
+                sys.exit(0)
+        
+        app = AntiZapretGUI()
+        app.mainloop()
+    except Exception as e:
+        print(f"Ошибка запуска: {e}")
+        import traceback
+        traceback.print_exc()
+        input("Нажмите Enter для выхода...")
 
 if __name__ == "__main__":
     main()
