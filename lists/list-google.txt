@@ -1,0 +1,11 @@
+# Google домены
+google.com
+google.ru
+googleapis.com
+googlevideo.com
+gstatic.com
+ggpht.com
+gmail.com
+youtube.com
+ytimg.com
+googleusercontent.com
